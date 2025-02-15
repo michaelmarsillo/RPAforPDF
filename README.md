@@ -37,7 +37,7 @@ my-react-frontend/
 
 - ⚛ **React.js** - Frontend framework
 - 💻 **Java Script** - Automation script
-- 💬 **HTML** - Text Language
+- 💬 **HTML** - Text language
 - 💅 **CSS** - Styling
 - 📝 **pdf-lib** - PDF handling (Java script library) 
 
