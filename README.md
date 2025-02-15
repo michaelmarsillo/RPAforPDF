@@ -40,7 +40,7 @@ my-react-frontend/
 - 💬 **HTML** - Text language
 - 💅 **CSS** - Styling
 - 📝 **pdf-lib** - PDF handling (Java script library) 
-- ⚙️ **Git* - Version control for commits and pushing via terminal
+- ⚙️ **Git** - Version control for commits and pushing via terminal
 
 ---
 
