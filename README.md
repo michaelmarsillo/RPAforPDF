@@ -1,6 +1,6 @@
 # 📝 Utility Marx PDF Filler
 
-A **React-based** application for filling specific fields in **ULT** and **PG.1** PDF files for the utility locating company i used to work at.
+A **React-based** application for automating the task of filling out the **ULT** and **PG.1** PDF files for the utility locating company i used to work at.
 
 ---
 
