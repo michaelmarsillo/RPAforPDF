@@ -90,22 +90,31 @@ body {
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    font-size: 32px;
-    font-weight: bold;
     color: #FF0000;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background-color: #000000;
-    padding: 10px 20px;
+    background-color: #0c0b0b;
+    padding: 5px 20px;
+    line-height: 2;
     text-align: left;
     display: flex; /* Align children horizontally */
     justify-content: space-between; /* Ensure it aligns left */
     align-items: center; /* Vertically center the text */
+
+
+    
+}
+.header .title {
+    font-size: 38px;
+    margin-right: 20px;
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.6);
+    font-weight: bold;
+    font-style: italic;
     
 }
 
 .subtitle {
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 1px;
     color: rgb(241, 15, 15);
     margin-left: 10px;
@@ -121,6 +130,38 @@ body {
     text-decoration: underline; /* Adds underline on hover for better UX */
 }
 
+.header .buttons-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 15px;
+}
+
+.homebutton {
+    font-size: 14px;
+    padding: 8px 16px; /* Adjust padding for better button appearance */
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.aboutbutton {
+    font-size: 14px;
+    padding: 8px 16px; /* Adjust padding for better button appearance */
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
+
+}
 /* Form Container */
 form {
     background: #2A2A2A;
@@ -168,14 +209,14 @@ button {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
     width: 100%;
     box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
 }
 
 button:hover {
     background: linear-gradient(45deg, #A00000, #FF0000);
-    transform: scale(1.05);
+    transform: scale(1.125);
 }
 
 /* Footer */

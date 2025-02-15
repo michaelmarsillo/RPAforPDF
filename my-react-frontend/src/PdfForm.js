@@ -28,20 +28,36 @@ const PdfForm = () => {
         const pdfDoc = await PDFDocument.load(pdfBytes);
         const page = pdfDoc.getPage(0);
         const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
+    
         // Add data to fields
-        Object.entries(fieldCoords).forEach(([field, [x, y]]) => {
-            if (data[field]) {
-                page.drawText(data[field], {
-                    x,
-                    y,
-                    size: 11,
-                    font,
-                    color: rgb(0, 0, 0),
+        Object.entries(fieldCoords).forEach(([field, coords]) => {
+            if (Array.isArray(coords[0])) {
+                // Handle case where the field has multiple coordinate pairs
+                coords.forEach(([x, y]) => {
+                    if (data[field]) {
+                        page.drawText(data[field], {
+                            x,
+                            y,
+                            size: 11,
+                            font,
+                            color: rgb(0, 0, 0),
+                        });
+                    }
                 });
+            } else {
+                // Handle standard case where the field has a single coordinate pair
+                if (data[field]) {
+                    page.drawText(data[field], {
+                        x: coords[0],
+                        y: coords[1],
+                        size: 11,
+                        font,
+                        color: rgb(0, 0, 0),
+                    });
+                }
             }
         });
-
+    
         return pdfDoc.save();
     };
 
@@ -65,7 +81,7 @@ const PdfForm = () => {
                 'ticketNumber': [140, 672],
                 'locatorName': [105, 165],
                 'address': [140, 600],
-                'dateCompleted': [140, 655]
+                'dateCompleted': [[140, 655], [200, 165]]
             }
         ];
 
@@ -91,13 +107,6 @@ const PdfForm = () => {
 
     return (
         <div className="container">
-        {/* Header */}
-        <header className="header">
-          <a className="title" href="https://www.utilitymarx.com/" target="_blank" rel="noreferrer">
-            Utility Marx
-          </a>
-          <span className="subtitle">A tool for PDF automation</span>
-        </header>
   
         {/* Main Title */}
         <div className="title-section">
