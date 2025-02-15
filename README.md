@@ -76,4 +76,4 @@ Pull requests are welcome! Open an issue for discussions or feature requests.
 
 ## 📜 License
 
-MIT License © 2025 [Your Name](https://github.com/yourusername)
+MIT License © 2025 [Your Name](https://github.com/michaelmarsillo)
