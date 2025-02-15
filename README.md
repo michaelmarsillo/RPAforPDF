@@ -1,6 +1,6 @@
 # 📝 Utility Marx PDF Filler
 
-A **React-based** application for automating the task of filling out the **ULT** and **PG.1** PDF files for the utility locating company i used to work at.
+A **React-based** application designed to automate the process of filling out the ULT and PG.1 PDF forms for the utility locating company I previously worked at.
 
 ---
 
@@ -36,6 +36,8 @@ my-react-frontend/
 ## 🔧 Technologies Used
 
 - ⚛ **React.js** - Frontend framework
+- 💻 **Java Script** - Automation script
+- 💬 **HTML** - Text Language
 - 💅 **CSS** - Styling
 - 📝 **pdf-lib** - PDF handling
 
@@ -44,7 +46,7 @@ my-react-frontend/
 ## 📌 Usage Guide
 
 1. Fill in the form fields.
-2. Click **Generate PDF** to download the completed document.
+2. Click **Generate PDFs** to download the completed documents.
 
 ---
 
