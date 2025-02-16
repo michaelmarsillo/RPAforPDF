@@ -10,7 +10,15 @@ const PdfForm = () => {
         locatorName: '',
         address: '',
         dateCompleted: '',
-        utilities: ''
+        utilities: '',
+        companyName: '',
+        contactName: '',
+        contactPhone: '',
+        contactEmail: '',
+        natureOfWork: '',
+        timeIn: '',
+        timeOut: '',
+
     });
 
     // Update form data as user types
@@ -81,7 +89,14 @@ const PdfForm = () => {
                 'ticketNumber': [140, 672],
                 'locatorName': [105, 165],
                 'address': [140, 600],
-                'dateCompleted': [[140, 655], [200, 165]]
+                'dateCompleted': [[140, 655], [240, 165]],
+                'companyName': [341, 672],
+                'contactName': [341, 655],
+                'contactPhone': [341, 637],
+                'contactEmail': [341, 619],
+                'natureOfWork': [140, 582],
+                'timeIn': [105, 148],
+                'timeOut': [240, 148]
             }
         ];
 
@@ -122,7 +137,13 @@ const PdfForm = () => {
             { label: "Address Of Locate", name: "address" },
             { label: "Date Completed", name: "dateCompleted" },
             { label: "Utilities Located", name: "utilities" },
-            { label: "Add", name: "add" },
+            { label: "Company Name", name: "companyName" },
+            { label: "Contact Name", name: "contactName" },
+            { label: "Contact Phone", name: "contactPhone" },
+            { label: "Contact Email", name: "contactEmail" },
+            { label: "Nature Of Work", name: "natureOfWork" },
+            { label: "Time In", name: "timeIn" },
+            { label: "Time Out", name: "timeOut" },
           ].map(({ label, name }) => (
             <div key={name} className="form-group">
               <label htmlFor={name}>{label}</label>
@@ -135,6 +156,11 @@ const PdfForm = () => {
               />
             </div>
           ))}
+
+          
+
+           
+
   
           <button type="submit" className="submit-btn">Generate PDFs</button>
         </form>
