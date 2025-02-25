@@ -270,3 +270,31 @@ button:hover {
     white-space: nowrap;
     justify-content: center;
 }
+
+.form-group .remarks-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    resize: vertical;  /* Allow resizing vertically */
+    min-height: 18px;  /* Set a minimum height */
+    overflow-y: hidden; 
+}
+
+/* Focus State */
+.form-group .remarks-box:focus {
+    border-color: #ff4d4d;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input,
+.form-group textarea {
+    font-family: inherit;  /* Use the same font */
+    font-size: 1rem;       /* Match input font size */
+}

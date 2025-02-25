@@ -1,14 +1,14 @@
+/* Container */
 .about-container {
-    background: #1E1E1E;
+    background: #2A2A2A;
     color: #fff;
     text-align: center;
     max-width: 700px;
-    margin: 100px auto;
-    padding: 30px;
-    border-radius: 12px;
+    margin: 155px auto;
+    padding: 35px 30px;
+    border-radius: 15px;
     box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    
     /* Flexbox for centering content */
     display: flex;
     flex-direction: column;
@@ -17,43 +17,60 @@
     min-height: 250px;
 }
 
+/* Hover effect for container */
 .about-container:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     box-shadow: 0 8px 30px rgba(255, 77, 77, 0.4);
 }
 
+/* Heading */
 h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
     color: #ff4d4d;
+    font-weight: 600;
 }
 
+/* Paragraph */
 p {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1.6;
     max-width: 90%;
+    margin-bottom: 20px;
+    color: #ccc;
 }
 
+/* Unordered list (Features) */
 ul {
-    text-align: left;
+    padding-left: 0;
+    margin-top: 10px;
+    font-size: 1.1rem;
     list-style-type: none;
-    padding: 0;
-    margin: 10px 0;
 }
 
 ul li {
-    background: rgba(51, 50, 50, 0.925);
-    padding: 15px;
-    margin: 7px 0;
-    border-radius: 5px;
+    background: rgba(51, 50, 50, 0.9);
+    padding: 14px 22px;
+    margin: 12px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgb(49, 31, 31);
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
+/* Hover effect for list items */
+ul li:hover {
+    background: rgba(255, 77, 77, 0.4);
+}
+
+/* Link Styles */
 a {
     color: #ff4d4d;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1rem;
-    margin-top: 15px;
+    margin-top: 20px;
     transition: color 0.3s ease-in-out;
 }
 
@@ -62,9 +79,21 @@ a:hover {
     color: #ff6666;
 }
 
+/* Footer */
 .footer-title {
     font-size: 13px;
     display: inline-block;
     white-space: nowrap;
     justify-content: center;
+    margin-top: 30px;
+    color: #999;
+}
+
+/* Small adjustments */
+ul li strong {
+    color: #ff4d4d;
+}
+
+strong {
+    color: #ff4d4d;
 }
