@@ -27,27 +27,34 @@ const PdfForm = () => {
         ticketNumber: {
             'ULT.pdf': 'UM Ticket No',
             'PG.1.pdf': 'Text1',
+            'JHA.pdf': 'Utility Marx Ticket',
         },
         locatorName: {
             'ULT.pdf': ['ULT Name', 'ULT Signature'],
             'PG.1.pdf': 'locator1',
+            'JHA.pdf': ["Locator's Name", "Locator's Name 2"],
         },
         address: {
             'ULT.pdf': 'Locate Address',
             'PG.1.pdf': 'Text7',
+            'JHA.pdf': 'Address',
         },
         dateCompleted: {
             'ULT.pdf': 'Date',
-            'PG.1.pdf': ['Text2', 'date1']
+            'PG.1.pdf': ['Text2', 'date1'],
+            'JHA.pdf': 'Date',
         },
         utilities: {
             'ULT.pdf': 'Utilities',
         },
         companyName: {
             'PG.1.pdf': 'Text3',
+            'JHA.pdf': "Contractor's Name",
+
         },
         contactName: {
             'PG.1.pdf': 'Text4',
+            'JHA.pdf': 'Contact Person',
         },
         contactPhone: {
             'PG.1.pdf': 'Text5',
@@ -60,6 +67,7 @@ const PdfForm = () => {
         },
         timeIn: {
             'PG.1.pdf': 'timein1',
+            'JHA.pdf': 'Time',
         },
         timeOut: {
             'PG.1.pdf': 'timeout1',
@@ -164,7 +172,8 @@ const PdfForm = () => {
     const generateFilledPdfs = async (data) => {
         const pdfTemplates = [
             '/pdfs/ULT.pdf',
-            '/pdfs/PG.1.pdf'
+            '/pdfs/PG.1.pdf',
+            '/pdfs/JHA.pdf'
         ];
 
         const filledPdfs = await Promise.all(
@@ -193,7 +202,7 @@ const PdfForm = () => {
             {/* Main Title */}
             <div className="title-section">
                 <h1>Utility Marx PDF Filler</h1>
-                <h3 className="subtext">For ULT and PG.1</h3>
+                <h3 className="subtext">For ULT, PG.1 and JHA</h3>
             </div>
 
             {/* Form */}
@@ -256,8 +265,6 @@ const PdfForm = () => {
 
                 <button type="submit" className="submit-btn">Generate PDFs</button>
             </form>
-
-    
 
             {/* Footer */}
             <footer className="footer">

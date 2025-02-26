@@ -23,10 +23,10 @@ const About = () => {
         <li>🚀 <strong>Efficiency:</strong> This tool eliminates repetitive tasks, letting you focus on what really matters, getting the job done!</li>
       </ul>
       <p>
-        This app was created to make filling out the <strong>PG.1</strong> and <strong>ULT</strong> documents faster and easier. It's designed to reduce errors, save time, and improve productivity for Utility Marx Technicians.
+        This app was created to make filling out the <strong>PG.1</strong>, <strong>ULT</strong> and <strong>JHA</strong> documents faster and easier. It's designed to reduce errors, save time, and improve productivity for Utility Marx Technicians.
       </p>
       <p>
-        <strong>💫 JHA coverage coming soon.</strong>
+        <strong>💫 JHA coverage added.</strong>
       </p>
 
       <div>
