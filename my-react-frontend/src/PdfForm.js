@@ -22,6 +22,8 @@ const PdfForm = () => {
         workToBegin: '',
         locateLog: '',
         numOfPages: '',
+        WorkerName1: '',
+        SafeWorkPermit: '',
     });
     const fieldNameMapping = {
         ticketNumber: {
@@ -83,6 +85,12 @@ const PdfForm = () => {
         },
         numOfPages: {
             'PG.1.pdf': 'pg',
+        },
+        WorkerName1: {
+            'JHA.pdf': 'Worker Name 1',
+        },
+        SafeWorkPermit: {
+            'JHA.pdf': 'Safe Work Permit #',
         },
         // Add other fields here with corresponding mappings for each PDF
     };
@@ -222,6 +230,8 @@ const PdfForm = () => {
                     { label: "Work To Begin Date", name: "workToBegin" },
                     { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, // Mark multiline fields
                     { label: "PG 1 of _", name: "numOfPages" },
+                    { label: "Assistant Workers Name", name: "WorkerName1" },
+                    { label: "Safe Work Permit #", name: "SafeWorkPermit" },
                     { label: "Time In", name: "timeIn" },
                     { label: "Time Out", name: "timeOut" },
                 ].map(({ label, name, multiline }) => (
