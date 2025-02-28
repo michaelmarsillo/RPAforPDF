@@ -258,18 +258,19 @@ button:hover {
 
 /* Footer */
 .footer {
-    margin-top: 20px;
-    font-size: 12px;
-    color: #888;
+    margin-top: 0px;
     text-align: left;
     
 }
 
+/* Footer */
 .footer-title {
-    font-size: 13px;
+    font-size: 12px;
     display: inline-block;
     white-space: nowrap;
     justify-content: center;
+    margin-top: 30px;
+    color: #999;
 }
 
 .form-group .remarks-box {
@@ -299,3 +300,34 @@ button:hover {
     font-family: inherit;  /* Use the same font */
     font-size: 1rem;       /* Match input font size */
 }
+
+.message {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    animation: entry-animation 4s ease-in-out infinite;
+    color: rgb(182, 73, 73);
+    text-align: center;
+    padding: 10px
+  }
+
+  .message h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .message ul {
+    margin-top: 5px;
+  }
+  
+  @keyframes entry-animation {
+    0% {
+      opacity: 10%;
+    }
+    50% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 10%;
+    }
+  }

@@ -29,6 +29,10 @@ const About = () => {
         <strong>💫 JHA coverage added.</strong>
       </p>
 
+      <div className="privateannouncment">
+        ❗The locate log field is re-sizeable, adjust accordingly (bottom right corner)
+      </div>
+
       <div>
         {/* Footer */}
         <footer className="footer">

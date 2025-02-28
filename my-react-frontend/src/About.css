@@ -81,7 +81,7 @@ a:hover {
 
 /* Footer */
 .footer-title {
-    font-size: 13px;
+    font-size: 12px;
     display: inline-block;
     white-space: nowrap;
     justify-content: center;
@@ -96,4 +96,13 @@ ul li strong {
 
 strong {
     color: #ff4d4d;
+}
+
+.privateannouncment {
+    font-size: 14px;
+    display: inline-block;
+    white-space: nowrap;
+    justify-content: center;
+    color: #999;
+
 }

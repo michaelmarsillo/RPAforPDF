@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import './PdfForm.css';
 
-
 const PdfForm = () => {
     // Manage form data
     const [formData, setFormData] = useState({
@@ -25,6 +24,8 @@ const PdfForm = () => {
         WorkerName1: '',
         SafeWorkPermit: '',
     });
+    const [showMessage, setShowMessage] = useState(false);  // State to track "Happy Locating!" message
+
     const fieldNameMapping = {
         ticketNumber: {
             'ULT.pdf': 'UM Ticket No',
@@ -52,7 +53,6 @@ const PdfForm = () => {
         companyName: {
             'PG.1.pdf': 'Text3',
             'JHA.pdf': "Contractor's Name",
-
         },
         contactName: {
             'PG.1.pdf': 'Text4',
@@ -92,7 +92,6 @@ const PdfForm = () => {
         SafeWorkPermit: {
             'JHA.pdf': 'Safe Work Permit #',
         },
-        // Add other fields here with corresponding mappings for each PDF
     };
 
     // Update form data as user types
@@ -105,90 +104,73 @@ const PdfForm = () => {
     };
 
     const handleKeyDown = (e) => {
+        const { name, value } = e.target;
+
+        // If Enter is pressed in a text field
         if (e.key === "Enter") {
-            e.preventDefault(); // Prevent form submission
+            e.preventDefault();  // Prevent form submission
 
-            const formElements = Array.from(e.target.form.elements);
-            const currentIndex = formElements.indexOf(e.target);
-
-            if (currentIndex !== -1 && currentIndex < formElements.length - 1) {
-                formElements[currentIndex + 1].focus(); // Focus the next field
+            // Handle the 'locateLog' field to allow a new line on Enter
+            if (name === "locateLog") {
+                e.target.value = value + "\n";  // Add a newline to the value
+                setFormData({
+                    ...formData,
+                    [name]: e.target.value
+                });
+            } else {
+                // Move focus to the next input field
+                const formElements = Array.from(e.target.form.elements);
+                const currentIndex = formElements.indexOf(e.target);
+                if (currentIndex !== -1 && currentIndex < formElements.length - 1) {
+                    formElements[currentIndex + 1].focus();
+                }
             }
         }
     };
 
     // Function to fill a PDF form using interactive fields
     const fillPdf = async (templateUrl, data) => {
-        // Load the existing PDF file
         const pdfBytes = await fetch(templateUrl).then((res) => res.arrayBuffer());
         const pdfDoc = await PDFDocument.load(pdfBytes);
-
-        // Embed a font (Standard Helvetica or any available font)
         const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-        // Get the form from the PDF
         const form = pdfDoc.getForm();
-
-        // Get the PDF file name (e.g., 'ULT.pdf' or 'PG.1.pdf')
         const pdfName = templateUrl.split('/').pop();
 
-        // Loop through each form field and fill it with user input
         Object.entries(data).forEach(([field, value]) => {
-            // Use the fieldNameMapping to get the corresponding field name in the current PDF
             const fieldMapping = fieldNameMapping[field];
             if (fieldMapping && fieldMapping[pdfName]) {
                 const fieldInPdf = fieldMapping[pdfName];
-
-                // Check if it's an array (multiple fields)
                 if (Array.isArray(fieldInPdf)) {
                     fieldInPdf.forEach(fieldName => {
-                        const formField = form.getTextField(fieldName);  // Get the corresponding field by name
+                        const formField = form.getTextField(fieldName);
                         if (formField) {
-                            formField.setText(value);  // Fill it with user data
-
-                            // Ensure font is set before changing font size
+                            formField.setText(value);
                             formField.updateAppearances(helveticaFont);
-
-                            // Set font size specifically for 'locateLog'
                             if (field === "locateLog") {
-                                formField.setFontSize(12);  // Adjust font size as needed
+                                formField.setFontSize(12);
                             }
                         }
                     });
                 } else {
-                    const formField = form.getTextField(fieldInPdf);  // Get the corresponding field by name
+                    const formField = form.getTextField(fieldInPdf);
                     if (formField) {
-                        formField.setText(value);  // Fill it with user data
-
-                        // Ensure font is set before changing font size
+                        formField.setText(value);
                         formField.updateAppearances(helveticaFont);
-
-                        // Set font size specifically for 'locateLog'
                         if (field === "locateLog") {
-                            formField.setFontSize(12);  // Adjust font size as needed
+                            formField.setFontSize(12);
                         }
                     }
                 }
             }
         });
 
-        // Save and return the updated PDF
         return pdfDoc.save();
     };
 
-    // Generate filled PDFs from form data
     const generateFilledPdfs = async (data) => {
-        const pdfTemplates = [
-            '/pdfs/ULT.pdf',
-            '/pdfs/PG.1.pdf',
-            '/pdfs/JHA.pdf'
-        ];
+        const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
+        const filledPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, data)));
 
-        const filledPdfs = await Promise.all(
-            pdfTemplates.map(template => fillPdf(template, data))
-        );
-
-        // Automatically download filled PDFs
         filledPdfs.forEach((pdfBytes, index) => {
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
@@ -196,9 +178,10 @@ const PdfForm = () => {
             link.download = `Filled${pdfTemplates[index]}`;
             link.click();
         });
+
+        setShowMessage(true);
     };
 
-    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         await generateFilledPdfs(formData);
@@ -206,59 +189,25 @@ const PdfForm = () => {
 
     return (
         <div className="container">
-
-            {/* Main Title */}
             <div className="title-section">
                 <h1>Utility Marx PDF Filler</h1>
                 <h3 className="subtext">For ULT, PG.1 and JHA</h3>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="form">
-                {[
-                    { label: "Ticket Number", name: "ticketNumber" },
-                    { label: "Locator Name", name: "locatorName" },
-                    { label: "Address Of Locate", name: "address" },
-                    { label: "Date Completed", name: "dateCompleted" },
-                    { label: "Utilities Located", name: "utilities" },
-                    { label: "Company Name", name: "companyName" },
-                    { label: "Contact Name", name: "contactName" },
-                    { label: "Contact Phone", name: "contactPhone" },
-                    { label: "Contact Email", name: "contactEmail" },
-                    { label: "Nature Of Work", name: "natureOfWork" },
-                    { label: "Ontario One Call #", name: "ontarioOneCall" },
-                    { label: "Work To Begin Date", name: "workToBegin" },
-                    { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, // Mark multiline fields
-                    { label: "PG 1 of _", name: "numOfPages" },
-                    { label: "Assistant Workers Name", name: "WorkerName1" },
-                    { label: "Safe Work Permit #", name: "SafeWorkPermit" },
-                    { label: "Time In", name: "timeIn" },
-                    { label: "Time Out", name: "timeOut" },
-                ].map(({ label, name, multiline }) => (
+                {[{ label: "Ticket Number", name: "ticketNumber" }, { label: "Locator Name", name: "locatorName" }, { label: "Address Of Locate", name: "address" }, { label: "Date Completed", name: "dateCompleted" }, { label: "Utilities Located", name: "utilities" }, { label: "Company Name", name: "companyName" }, { label: "Contact Name", name: "contactName" }, { label: "Contact Phone", name: "contactPhone" }, { label: "Contact Email", name: "contactEmail" }, { label: "Nature Of Work", name: "natureOfWork" }, { label: "Ontario One Call #", name: "ontarioOneCall" }, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, { label: "PG 1 of _", name: "numOfPages" }, { label: "Assistant Workers Name", name: "WorkerName1" }, { label: "Safe Work Permit #", name: "SafeWorkPermit" }, { label: "Time In", name: "timeIn" }, { label: "Time Out", name: "timeOut" }].map(({ label, name, multiline }) => (
                     <div key={name} className="form-group">
                         <label htmlFor={name}>{label}</label>
                         {multiline ? (
                             <textarea
-                            id={name}
-                            name={name}
-                            value={formData[name]}
-                            onChange={(e) => {
-                                handleChange(e);  // Keep your existing change handler
-                                e.target.style.height = "auto"; // Reset height
-                                e.target.style.height = `${e.target.scrollHeight}px`; // Expand based on content
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault(); // Prevent form submission
-                                    setFormData((prev) => ({
-                                        ...prev,
-                                        [name]: prev[name] + "\n",
-                                    }));
-                                }
-                            }}
-                            rows="1"
-                            className="remarks-box"
-                        />
+                                id={name}
+                                name={name}
+                                value={formData[name]}
+                                onChange={handleChange}
+                                onKeyDown={handleKeyDown}
+                                rows="1"
+                                className="remarks-box"
+                            />
                         ) : (
                             <input
                                 type="text"
@@ -267,19 +216,24 @@ const PdfForm = () => {
                                 value={formData[name]}
                                 onChange={handleChange}
                                 onKeyDown={handleKeyDown}
-                                className="input-field" // Ensure this class applies to input fields
+                                className="input-field"
                             />
                         )}
                     </div>
                 ))}
-
-                <button type="submit" className="submit-btn">Generate PDFs</button>
+                <button type="submit" className="submit-button">Generate PDFs</button>
             </form>
 
-            {/* Footer */}
+            {showMessage && (
+                <div className="message show">
+                    <h2>Happy Locating!</h2>
+                    <ul> Make sure to double check for any mistakes.</ul>
+                </div>
+            )}
+
             <footer className="footer">
                 <p className="footer-title">
-                    This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved
+                    This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved.
                 </p>
             </footer>
         </div>
