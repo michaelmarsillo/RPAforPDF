@@ -1,12 +1,12 @@
 # 📝 Utility Marx PDF Filler
 
-A **React-based** application designed to automate the process of filling out the ULT and PG.1 PDF forms for the utility locating company I previously worked at.
+A **React-based** application designed to automate the process of filling out the ULT, PG.1 and JHA PDF forms for the utility locating company I previously worked at.
 
 ---
 
 ## 🚀 Features
 
-- 📄 **Fill out the ULT and PG.1 PDFs** automatically
+- 📄 **Fill out the ULT, PG.1 and JHA PDFs** automatically
 - 🎨 **Simple and user-friendly UI**
 - ⚡ **Fast and efficient form processing**
 - 📂 **Stores preloaded PDFs in the `public/pdfs` folder**
@@ -18,7 +18,7 @@ A **React-based** application designed to automate the process of filling out th
 ```
 my-react-frontend/
 │── public/
-│   ├── pdfs/             # Contains ULT.pdf and PG.1.pdf
+│   ├── pdfs/             # Contains ULT.pdf, PG.1.pdf and JHA.pdf
 │   ├── favicon.ico       # App icon
 │   ├── index.html        # Main HTML file
 │── src/

@@ -249,6 +249,7 @@ button {
     transition: all 0.4s ease-in-out;
     width: 100%;
     box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+    align-items: center;
 }
 
 button:hover {
@@ -330,4 +331,57 @@ button:hover {
     100% {
       opacity: 10%;
     }
+}
+
+  .container {
+    align-items: center;
   }
+  .preview-section {
+    justify-content: center;
+    align-items: center;
+    background-color: #2A2A2A;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+  }
+
+
+.preview-section h2 {
+    color: #ff4d4d;
+    margin-bottom: 15px;
+}
+
+.preview-section embed {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #d63939;
+}
+
+.go-back-button, .submit-button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-items: center;
+}
+
+.go-back-button {
+    background-color: #f44336;
+    color: white;
+    width: 50%;
+}
+
+.submit-button {
+    color: rgb(255, 255, 255);
+    width: 50%;
+}
+
+.go-back-button:hover, .submit-button:hover {
+    opacity: 0.8;
+    background: linear-gradient(45deg, #A00000, #FF0000);
+    transform: scale(1.105);
+}
+
+

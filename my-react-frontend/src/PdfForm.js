@@ -25,6 +25,8 @@ const PdfForm = () => {
         SafeWorkPermit: '',
     });
     const [showMessage, setShowMessage] = useState(false);  // State to track "Happy Locating!" message
+    const [previewPdf, setPreviewPdf] = useState(null); // State to track the preview PDF
+    const [isPreview, setIsPreview] = useState(false); // State to toggle between form and preview mode
 
     const fieldNameMapping = {
         ticketNumber: {
@@ -86,10 +88,10 @@ const PdfForm = () => {
         numOfPages: {
             'PG.1.pdf': 'pg',
         },
-        WorkerName1: {
+        workerName1: {
             'JHA.pdf': 'Worker Name 1',
         },
-        SafeWorkPermit: {
+        safeWorkPermit: {
             'JHA.pdf': 'Safe Work Permit #',
         },
     };
@@ -175,11 +177,26 @@ const PdfForm = () => {
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `Filled${pdfTemplates[index]}`;
+            link.download = `Filled_${pdfTemplates[index]}`;
             link.click();
         });
 
         setShowMessage(true);
+    };
+
+    const handlePreview = async () => {
+        const previewData = formData;
+        const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
+        const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
+
+        const previewBlob = new Blob([previewPdfs[0]], { type: 'application/pdf' });
+        const previewLink = URL.createObjectURL(previewBlob);
+        setPreviewPdf(previewLink);
+        setIsPreview(true); // Toggle to preview mode
+    };
+
+    const handleGoBack = () => {
+        setIsPreview(false); // Go back to form
     };
 
     const handleSubmit = async (event) => {
@@ -194,35 +211,46 @@ const PdfForm = () => {
                 <h3 className="subtext">For ULT, PG.1 and JHA</h3>
             </div>
 
-            <form onSubmit={handleSubmit} className="form">
-                {[{ label: "Ticket Number", name: "ticketNumber" }, { label: "Locator Name", name: "locatorName" }, { label: "Address Of Locate", name: "address" }, { label: "Date Completed", name: "dateCompleted" }, { label: "Utilities Located", name: "utilities" }, { label: "Company Name", name: "companyName" }, { label: "Contact Name", name: "contactName" }, { label: "Contact Phone", name: "contactPhone" }, { label: "Contact Email", name: "contactEmail" }, { label: "Nature Of Work", name: "natureOfWork" }, { label: "Ontario One Call #", name: "ontarioOneCall" }, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, { label: "PG 1 of _", name: "numOfPages" }, { label: "Assistant Workers Name", name: "WorkerName1" }, { label: "Safe Work Permit #", name: "SafeWorkPermit" }, { label: "Time In", name: "timeIn" }, { label: "Time Out", name: "timeOut" }].map(({ label, name, multiline }) => (
-                    <div key={name} className="form-group">
-                        <label htmlFor={name}>{label}</label>
-                        {multiline ? (
-                            <textarea
-                                id={name}
-                                name={name}
-                                value={formData[name]}
-                                onChange={handleChange}
-                                onKeyDown={handleKeyDown}
-                                rows="1"
-                                className="remarks-box"
-                            />
-                        ) : (
-                            <input
-                                type="text"
-                                id={name}
-                                name={name}
-                                value={formData[name]}
-                                onChange={handleChange}
-                                onKeyDown={handleKeyDown}
-                                className="input-field"
-                            />
-                        )}
-                    </div>
-                ))}
-                <button type="submit" className="submit-button">Generate PDFs</button>
-            </form>
+            {!isPreview ? (
+                <form onSubmit={handleSubmit} className="form">
+                    {[{ label: "Ticket Number", name: "ticketNumber" }, { label: "Locator Name", name: "locatorName" }, { label: "Address Of Locate", name: "address" }, { label: "Date Completed", name: "dateCompleted" }, { label: "Utilities Located", name: "utilities" }, { label: "Company Name", name: "companyName" }, { label: "Contact Name", name: "contactName" }, { label: "Contact Phone", name: "contactPhone" }, { label: "Contact Email", name: "contactEmail" }, { label: "Nature Of Work", name: "natureOfWork" }, { label: "Ontario One Call #", name: "ontarioOneCall" }, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, { label: "PG 1 of _", name: "numOfPages" }, { label: "Assistant Workers Name", name: "workerName1" }, { label: "Safe Work Permit #", name: "safeWorkPermit" }, { label: "Time In", name: "timeIn" }, { label: "Time Out", name: "timeOut" }].map(({ label, name, multiline }) => (
+                        <div key={name} className="form-group">
+                            <label htmlFor={name}>{label}</label>
+                            {multiline ? (
+                                <textarea
+                                    id={name}
+                                    name={name}
+                                    value={formData[name]}
+                                    onChange={handleChange}
+                                    onKeyDown={handleKeyDown}
+                                    rows="1"
+                                    className="remarks-box"
+                                />
+                            ) : (
+                                <input
+                                    type="text"
+                                    id={name}
+                                    name={name}
+                                    value={formData[name]}
+                                    onChange={handleChange}
+                                    onKeyDown={handleKeyDown}
+                                    className="input-field"
+                                />
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" className="preview-button" onClick={handlePreview}>Preview</button>
+                </form>
+            ) : (
+                <div className="preview-section">
+                    <h2>Preview</h2>
+                    {previewPdf && (
+                        <embed src={previewPdf} width="600" height="800" type="application/pdf" />
+                    )}
+                    <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
+                    <button type="button" className="submit-button" onClick={handleSubmit}>Confirm & Generate PDFs</button>
+                </div>
+            )}
 
             {showMessage && (
                 <div className="message show">
