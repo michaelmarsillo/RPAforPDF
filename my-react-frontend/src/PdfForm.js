@@ -3,7 +3,6 @@ import { PDFDocument, StandardFonts } from 'pdf-lib';
 import './PdfForm.css';
 
 const PdfForm = () => {
-    // Manage form data
     const [formData, setFormData] = useState({
         ticketNumber: '',
         locatorName: '',
@@ -24,9 +23,12 @@ const PdfForm = () => {
         WorkerName1: '',
         SafeWorkPermit: '',
     });
-    const [showMessage, setShowMessage] = useState(false);  // State to track "Happy Locating!" message
+
+    const [showMessage, setShowMessage] = useState(false);
     const [previewPdf, setPreviewPdf] = useState(null); // State to track the preview PDF
     const [isPreview, setIsPreview] = useState(false); // State to toggle between form and preview mode
+    const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0); // State to track the current preview index
+    const [previewPdfs, setPreviewPdfs] = useState([]); // State to hold all generated PDFs
 
     const fieldNameMapping = {
         ticketNumber: {
@@ -96,7 +98,7 @@ const PdfForm = () => {
         },
     };
 
-    // Update form data as user types
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -108,19 +110,15 @@ const PdfForm = () => {
     const handleKeyDown = (e) => {
         const { name, value } = e.target;
 
-        // If Enter is pressed in a text field
         if (e.key === "Enter") {
-            e.preventDefault();  // Prevent form submission
-
-            // Handle the 'locateLog' field to allow a new line on Enter
+            e.preventDefault();
             if (name === "locateLog") {
-                e.target.value = value + "\n";  // Add a newline to the value
+                e.target.value = value + "\n";
                 setFormData({
                     ...formData,
                     [name]: e.target.value
                 });
             } else {
-                // Move focus to the next input field
                 const formElements = Array.from(e.target.form.elements);
                 const currentIndex = formElements.indexOf(e.target);
                 if (currentIndex !== -1 && currentIndex < formElements.length - 1) {
@@ -130,7 +128,6 @@ const PdfForm = () => {
         }
     };
 
-    // Function to fill a PDF form using interactive fields
     const fillPdf = async (templateUrl, data) => {
         const pdfBytes = await fetch(templateUrl).then((res) => res.arrayBuffer());
         const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -184,24 +181,38 @@ const PdfForm = () => {
         setShowMessage(true);
     };
 
+
     const handlePreview = async () => {
         const previewData = formData;
         const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
         const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
 
-        const previewBlob = new Blob([previewPdfs[0]], { type: 'application/pdf' });
-        const previewLink = URL.createObjectURL(previewBlob);
-        setPreviewPdf(previewLink);
-        setIsPreview(true); // Toggle to preview mode
+        setPreviewPdfs(previewPdfs);  // Store the preview PDFs
+        setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' }))); // Show the first PDF
+        setIsPreview(true);  // Toggle to preview mode
     };
 
     const handleGoBack = () => {
-        setIsPreview(false); // Go back to form
+        setIsPreview(false);  // Go back to form
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         await generateFilledPdfs(formData);
+    };
+
+    const handleNextPdf = () => {
+        if (currentPreviewIndex < previewPdfs.length - 1) {
+            setCurrentPreviewIndex(currentPreviewIndex + 1);
+            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[currentPreviewIndex + 1]], { type: 'application/pdf' })));
+        }
+    };
+
+    const handlePrevPdf = () => {
+        if (currentPreviewIndex > 0) {
+            setCurrentPreviewIndex(currentPreviewIndex - 1);
+            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[currentPreviewIndex - 1]], { type: 'application/pdf' })));
+        }
     };
 
     return (
@@ -242,11 +253,16 @@ const PdfForm = () => {
                     <button type="button" className="preview-button" onClick={handlePreview}>Preview</button>
                 </form>
             ) : (
+
                 <div className="preview-section">
                     <h2>Preview</h2>
                     {previewPdf && (
                         <embed src={previewPdf} width="600" height="800" type="application/pdf" />
                     )}
+                    <div className="navigation-buttons">
+                        <button type="button" className="prev-button" onClick={handlePrevPdf}>Previous</button>
+                        <button type="button" className="next-button" onClick={handleNextPdf}>Next</button>
+                    </div>
                     <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
                     <button type="button" className="submit-button" onClick={handleSubmit}>Confirm & Generate PDFs</button>
                 </div>

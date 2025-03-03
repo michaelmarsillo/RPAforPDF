@@ -384,4 +384,27 @@ button:hover {
     transform: scale(1.105);
 }
 
+.navigation-buttons {
+    display: flex;
+    gap: 300px;
+    justify-content: space-between; /* Space out the buttons */
+    width: 100%; /* Ensure the buttons take full width */
+    padding: 5px 0; /* Add some padding for better spacing */
+    
+}
+
+.prev-button, .next-button {
+    font-size: 14px;
+    padding: 10px 14px; /* Adjust padding for better button appearance */
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
+  
+}
+
+
 
