@@ -381,7 +381,7 @@ button:hover {
 
 .navigation-buttons {
     display: flex;
-    gap: 200px;
+    gap: 180px;
     justify-content: space-between; /* Space out the buttons */
     width: 80%; /* Ensure the buttons take full width */
     padding: 5px 0; /* Add some padding for better spacing */

@@ -167,28 +167,32 @@ const PdfForm = () => {
     };
 
     const generateFilledPdfs = async (data) => {
-        const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
-        const filledPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, data)));
+    const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
+    const filledPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, data)));
 
-        filledPdfs.forEach((pdfBytes, index) => {
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Filled_${pdfTemplates[index]}`;
-            link.click();
-        });
+    filledPdfs.forEach((pdfBytes, index) => {
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `Filled_${pdfTemplates[index].split('/').pop()}`; // Ensure correct file name for download
+        link.click();
+    });
 
-        setShowMessage(true);
-    };
+    setShowMessage(true);
+};
 
 
     const handlePreview = async () => {
         const previewData = formData;
         const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
+        
+        // Generate preview PDFs for each template
         const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
-
-        setPreviewPdfs(previewPdfs);  // Store the preview PDFs
-        setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' }))); // Show the first PDF
+        
+        // Store the preview PDFs (for navigation purposes)
+        setPreviewPdfs(previewPdfs);
+        
+        setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' })));
         setIsPreview(true);  // Toggle to preview mode
     };
 
@@ -203,15 +207,17 @@ const PdfForm = () => {
 
     const handleNextPdf = () => {
         if (currentPreviewIndex < previewPdfs.length - 1) {
-            setCurrentPreviewIndex(currentPreviewIndex + 1);
-            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[currentPreviewIndex + 1]], { type: 'application/pdf' })));
+            const nextIndex = currentPreviewIndex + 1;
+            setCurrentPreviewIndex(nextIndex);
+            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[nextIndex]], { type: 'application/pdf' })));
         }
     };
 
     const handlePrevPdf = () => {
         if (currentPreviewIndex > 0) {
-            setCurrentPreviewIndex(currentPreviewIndex - 1);
-            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[currentPreviewIndex - 1]], { type: 'application/pdf' })));
+            const prevIndex = currentPreviewIndex - 1;
+            setCurrentPreviewIndex(prevIndex);
+            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[prevIndex]], { type: 'application/pdf' })));
         }
     };
 
@@ -261,7 +267,8 @@ const PdfForm = () => {
                     )}
                     <div className="navigation-buttons">
                         <button type="button" className="prev-button" onClick={handlePrevPdf}>Previous</button>
-                        <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
+                                            <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
+
                         <button type="button" className="next-button" onClick={handleNextPdf}>Next</button>
                     </div>
                     <button type="button" className="submit-button" onClick={handleSubmit}>Confirm & Generate PDFs</button>
