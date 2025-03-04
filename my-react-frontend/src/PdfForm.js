@@ -261,9 +261,9 @@ const PdfForm = () => {
                     )}
                     <div className="navigation-buttons">
                         <button type="button" className="prev-button" onClick={handlePrevPdf}>Previous</button>
+                        <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
                         <button type="button" className="next-button" onClick={handleNextPdf}>Next</button>
                     </div>
-                    <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
                     <button type="button" className="submit-button" onClick={handleSubmit}>Confirm & Generate PDFs</button>
                 </div>
             )}
@@ -271,7 +271,7 @@ const PdfForm = () => {
             {showMessage && (
                 <div className="message show">
                     <h2>Happy Locating!</h2>
-                    <ul> Make sure to double check for any mistakes.</ul>
+                    <ul>Make sure to double check for any mistakes.</ul>
                 </div>
             )}
 

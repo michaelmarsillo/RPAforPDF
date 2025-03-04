@@ -358,7 +358,7 @@ button:hover {
     border: 1px solid #d63939;
 }
 
-.go-back-button, .submit-button {
+.submit-button {
     margin: 10px;
     padding: 10px 20px;
     border: none;
@@ -367,15 +367,10 @@ button:hover {
     justify-items: center;
 }
 
-.go-back-button {
-    background-color: #f44336;
-    color: white;
-    width: 50%;
-}
-
 .submit-button {
     color: rgb(255, 255, 255);
-    width: 50%;
+    width: 60%;
+    padding: 12px 10px;
 }
 
 .go-back-button:hover, .submit-button:hover {
@@ -386,14 +381,16 @@ button:hover {
 
 .navigation-buttons {
     display: flex;
-    gap: 300px;
+    gap: 200px;
     justify-content: space-between; /* Space out the buttons */
-    width: 100%; /* Ensure the buttons take full width */
+    width: 80%; /* Ensure the buttons take full width */
     padding: 5px 0; /* Add some padding for better spacing */
     
 }
 
-.prev-button, .next-button {
+.prev-button, .next-button, .go-back-button {
+    white-space: nowrap;
+    display: flex;
     font-size: 14px;
     padding: 10px 14px; /* Adjust padding for better button appearance */
     background-color: #FF0000;
