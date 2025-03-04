@@ -5,6 +5,12 @@ const About = () => {
   return (
     <div className="about-container">
       <h1>About Utility Marx PDF Filler</h1>
+      <div className="editannouncment">
+      ❗You can edit the PDFs while previewing them and download the changes by pressing ⬇️ in the top right
+      </div>
+      <div className="privateannouncment">
+        ❗The locate log/remarks field is re-sizeable, adjust accordingly (bottom right corner)
+      </div>
       <p>
         This tool was developed to simplify and speed up the process of generating PDF forms for the Locate Technicians at Utility Marx. No more manually filling out repetitive forms, this app does it for you!
       </p>
@@ -28,10 +34,6 @@ const About = () => {
       <p>
         <strong>💫 JHA coverage added.</strong>
       </p>
-
-      <div className="privateannouncment">
-        ❗The locate log field is re-sizeable, adjust accordingly (bottom right corner)
-      </div>
 
       <div>
         {/* Footer */}

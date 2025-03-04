@@ -106,3 +106,12 @@ strong {
     color: #999;
 
 }
+
+.editannouncment {
+    margin-bottom: 8px;
+    font-size: 14px;
+    display: inline-block;
+    white-space: nowrap;
+    justify-content: center;
+    color: #999;
+}
