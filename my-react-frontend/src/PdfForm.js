@@ -20,8 +20,8 @@ const PdfForm = () => {
         workToBegin: '',
         locateLog: '',
         numOfPages: '',
-        WorkerName1: '',
-        SafeWorkPermit: '',
+        workerName1: '',
+        safeWorkPermit: '',
     });
 
     const [showMessage, setShowMessage] = useState(false);
@@ -29,6 +29,7 @@ const PdfForm = () => {
     const [isPreview, setIsPreview] = useState(false); // State to toggle between form and preview mode
     const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0); // State to track the current preview index
     const [previewPdfs, setPreviewPdfs] = useState([]); // State to hold all generated PDFs
+    const [pdfNames] = useState(['ULT.pdf', 'PG.1.pdf', 'JHA.pdf']); // Names of the PDF files
 
     const fieldNameMapping = {
         ticketNumber: {
@@ -166,21 +167,6 @@ const PdfForm = () => {
         return pdfDoc.save();
     };
 
-    const generateFilledPdfs = async (data) => {
-    const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
-    const filledPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, data)));
-
-    filledPdfs.forEach((pdfBytes, index) => {
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `Filled_${pdfTemplates[index].split('/').pop()}`; // Ensure correct file name for download
-        link.click();
-    });
-
-    setShowMessage(true);
-};
-
 
     const handlePreview = async () => {
         const previewData = formData;
@@ -194,15 +180,11 @@ const PdfForm = () => {
         
         setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' })));
         setIsPreview(true);  // Toggle to preview mode
+        setShowMessage(true);
     };
 
     const handleGoBack = () => {
         setIsPreview(false);  // Go back to form
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        await generateFilledPdfs(formData);
     };
 
     const handleNextPdf = () => {
@@ -229,8 +211,8 @@ const PdfForm = () => {
             </div>
 
             {!isPreview ? (
-                <form onSubmit={handleSubmit} className="form">
-                    {[{ label: "Ticket Number", name: "ticketNumber" }, { label: "Locator Name", name: "locatorName" }, { label: "Address Of Locate", name: "address" }, { label: "Date Completed", name: "dateCompleted" }, { label: "Utilities Located", name: "utilities" }, { label: "Company Name", name: "companyName" }, { label: "Contact Name", name: "contactName" }, { label: "Contact Phone", name: "contactPhone" }, { label: "Contact Email", name: "contactEmail" }, { label: "Nature Of Work", name: "natureOfWork" }, { label: "Ontario One Call #", name: "ontarioOneCall" }, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, { label: "PG 1 of _", name: "numOfPages" }, { label: "Assistant Workers Name", name: "workerName1" }, { label: "Safe Work Permit #", name: "safeWorkPermit" }, { label: "Time In", name: "timeIn" }, { label: "Time Out", name: "timeOut" }].map(({ label, name, multiline }) => (
+                <form className="form">
+                    {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678"}, { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" }, { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St" }, { label: "Date Completed", name: "dateCompleted", placeholder: "EG: yyyy/mm/dd"}, { label: "Utilities Located", name: "utilities" , placeholder: "EG: Telecomms and Gas"}, { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon"}, { label: "Contact Name", name: "contactName", placeholder: "EG: Ozzy Osbourne" }, { label: "Contact Phone", name: "contactPhone", placeholder: "EG: 123-456-7890"}, { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com"}, { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey"}, { label: "Ontario One Call #", name: "ontarioOneCall"}, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Locate Log / Remarks", name: "locateLog", multiline: true }, { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2"}, { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" }, { label: "Safe Work Permit #", name: "safeWorkPermit" }, { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am"}, { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm"}].map(({ label, name, placeholder, multiline }) => (
                         <div key={name} className="form-group">
                             <label htmlFor={name}>{label}</label>
                             {multiline ? (
@@ -240,6 +222,7 @@ const PdfForm = () => {
                                     value={formData[name]}
                                     onChange={handleChange}
                                     onKeyDown={handleKeyDown}
+                                    placeholder={placeholder}
                                     rows="1"
                                     className="remarks-box"
                                 />
@@ -251,6 +234,7 @@ const PdfForm = () => {
                                     value={formData[name]}
                                     onChange={handleChange}
                                     onKeyDown={handleKeyDown}
+                                    placeholder={placeholder}
                                     className="input-field"
                                 />
                             )}
@@ -259,19 +243,21 @@ const PdfForm = () => {
                     <button type="button" className="preview-button" onClick={handlePreview}>Preview</button>
                 </form>
             ) : (
-
                 <div className="preview-section">
-                    <h2>Preview</h2>
+                    <div className="preview-header">
+                        <h2>Preview: {pdfNames[currentPreviewIndex]}</h2>
+                        <div className="download-instruction">
+                            Customize and download your PDF with changes here ⬇️
+                        </div>
+                    </div>
                     {previewPdf && (
                         <embed src={previewPdf} width="600" height="800" type="application/pdf" />
                     )}
                     <div className="navigation-buttons">
-                        <button type="button" className="prev-button" onClick={handlePrevPdf}>Previous</button>
-                                            <button type="button" className="go-back-button" onClick={handleGoBack}>Go Back</button>
-
-                        <button type="button" className="next-button" onClick={handleNextPdf}>Next</button>
+                        <button type="button" className="prev-button" onClick={handlePrevPdf} disabled={currentPreviewIndex === 0}>Previous</button>
+                        <button type="button" className="go-back-button" onClick={handleGoBack}>Back to Edit</button>
+                        <button type="button" className="next-button" onClick={handleNextPdf} disabled={currentPreviewIndex === previewPdfs.length - 1}>Next</button>
                     </div>
-                    <button type="button" className="submit-button" onClick={handleSubmit}>Confirm & Generate PDFs</button>
                 </div>
             )}
 

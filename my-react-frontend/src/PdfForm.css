@@ -1,5 +1,5 @@
-/* Container for the form */
 
+/* Container for the form */
 .container {
     display: flex;
     flex-direction: column;
@@ -349,13 +349,20 @@ button:hover {
 
 .preview-section h2 {
     color: #ff4d4d;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .preview-section embed {
     display: block;
     margin: 0 auto;
     border: 1px solid #d63939;
+}
+
+.download-instruction {
+    font-size: 17px;
+    color: #c04141;
+    margin-bottom: 3px;
+
 }
 
 .submit-button {
@@ -401,6 +408,11 @@ button:hover {
     transition: background-color 0.3s ease;
     transition: all 0.3s ease-in-out;
   
+}
+
+input::placeholder,
+textarea::placeholder {
+    font-size: 13px; /* Adjust the size as needed */
 }
 
 
