@@ -6,7 +6,7 @@ const About = () => {
     <div className="about-container">
       <h1>About Utility Marx PDF Filler</h1>
       <div className="editannouncment">
-      ❗You can edit the PDFs while previewing them and download the changes by pressing ⬇️ in the top right
+        ❗You can edit the PDFs while previewing them and download the changes by pressing ⬇️ in the top right
       </div>
       <div className="privateannouncment">
         ❗The locate log/remarks field is re-sizeable, adjust accordingly (bottom right corner)
@@ -35,14 +35,12 @@ const About = () => {
         <strong>💫 JHA coverage added.</strong>
       </p>
 
-      <div>
-        {/* Footer */}
-        <footer className="footer">
-          <p className="footer-title">
-            This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.
-          </p>
-        </footer>
-      </div>
+      {/* Footer */}
+      <footer className="footer">
+        <li className="footer-title">
+          This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.
+        </li>
+      </footer>
     </div>
   );
 };

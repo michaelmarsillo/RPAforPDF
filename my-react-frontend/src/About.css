@@ -3,8 +3,9 @@
     background: #2A2A2A;
     color: #fff;
     text-align: center;
+    width: 90%;
     max-width: 700px;
-    margin: 155px auto;
+    margin: 120px auto;
     padding: 35px 30px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
@@ -24,59 +25,11 @@
 }
 
 /* Heading */
-h1 {
+.about-container h1 {
     font-size: 2.2rem;
     margin-bottom: 20px;
     color: #ff4d4d;
     font-weight: 600;
-}
-
-/* Paragraph */
-p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 90%;
-    margin-bottom: 20px;
-    color: #ccc;
-}
-
-/* Unordered list (Features) */
-ul {
-    padding-left: 0;
-    margin-top: 10px;
-    font-size: 1.1rem;
-    list-style-type: none;
-}
-
-ul li {
-    background: rgba(51, 50, 50, 0.9);
-    padding: 14px 22px;
-    margin: 12px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgb(49, 31, 31);
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-/* Hover effect for list items */
-ul li:hover {
-    background: rgba(255, 77, 77, 0.4);
-}
-
-/* Link Styles */
-a {
-    color: #ff4d4d;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-top: 20px;
-    transition: color 0.3s ease-in-out;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #ff6666;
 }
 
 /* Footer */
@@ -88,13 +41,65 @@ a:hover {
     margin-top: 30px;
     color: #999;
 }
+/* Paragraph */
+.about-container p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    width: 100%;
+    max-width: 90%;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+/* Unordered list (Features) */
+.about-container ul {
+    padding-left: 0;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    list-style-type: none;
+    width: 100%;
+    max-width: 90%;
+}
+
+.about-container ul li {
+    background: rgba(51, 50, 50, 0.9);
+    padding: 14px 22px;
+    margin: 12px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgb(49, 31, 31);
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+/* Hover effect for list items */
+.about-container ul li:hover {
+    background: rgba(255, 77, 77, 0.4);
+}
+
+/* Link Styles */
+.about-container a {
+    color: #ff4d4d;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    transition: color 0.3s ease-in-out;
+}
+
+.about-container a:hover {
+    text-decoration: underline;
+    color: #ff6666;
+}
+
 
 /* Small adjustments */
-ul li strong {
+.about-container ul li strong {
     color: #ff4d4d;
 }
 
-strong {
+.about-container strong {
     color: #ff4d4d;
 }
 
@@ -105,7 +110,6 @@ strong {
     justify-content: center;
     color: #999;
     margin-bottom: 12px;
-
 }
 
 .editannouncment {
@@ -122,8 +126,110 @@ strong {
     font-size: 1.5rem;
     margin-right: 0.5rem;
     flex-shrink: 0;
-  }
+}
 
-  .keyfeatures {
+.keyfeatures {
     margin-bottom: 3px;
-  }
+}
+
+/* Media Queries for Responsive Design */
+
+/* Large screens */
+@media screen and (min-width: 1200px) {
+    .about-container {
+        padding: 40px 50px;
+    }
+}
+
+/* Medium screens */
+@media screen and (max-width: 992px) {
+    .about-container {
+        margin: 100px auto;
+        padding: 30px 25px;
+    }
+    
+    .about-container h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Small tablets and large phones */
+@media screen and (max-width: 768px) {
+    .about-container {
+        margin: 80px auto;
+        padding: 25px 20px;
+    }
+    
+    .about-container h1 {
+        font-size: 1.8rem;
+    }
+    
+    .about-container p,
+    .about-container ul li {
+        font-size: 0.95rem;
+    }
+}
+
+/* Small phones */
+@media screen and (max-width: 480px) {
+    .about-container {
+        margin: 60px auto 40px;
+        padding: 20px 15px;
+        width: 95%;
+    }
+    
+    .about-container h1 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+    
+    .about-container p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .about-container ul li {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        margin: 8px 0;
+    }
+    
+    .privateannouncment,
+    .editannouncment,
+    .footer-title {
+        font-size: 11px;
+    }
+}
+
+/* Extra small phones */
+@media screen and (max-width: 320px) {
+    .about-container {
+        margin: 50px auto 30px;
+        padding: 15px 10px;
+    }
+    
+    .about-container h1 {
+        font-size: 1.4rem;
+    }
+    
+    .about-container p,
+    .about-container ul li {
+        font-size: 0.85rem;
+    }
+}
+
+/* Fix for unwrapped text */
+@media screen and (max-width: 600px) {
+    .privateannouncment,
+    .editannouncment {
+        white-space: normal;
+    }
+}
+
+/* Handle very small height screens */
+@media screen and (max-height: 600px) {
+    .about-container {
+        margin: 40px auto;
+        min-height: 200px;
+    }
+}
