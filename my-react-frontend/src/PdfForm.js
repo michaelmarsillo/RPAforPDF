@@ -99,12 +99,31 @@ const PdfForm = () => {
         },
     };
 
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
+        });
+    };
+
+    // Handle date field changes specifically
+    const handleDateChange = (e) => {
+        const { name, value } = e.target;
+        
+        // Format date from yyyy-mm-dd to yyyy/mm/dd for consistency
+        let formattedDate = '';
+        if (value) {
+            const date = new Date(value);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            formattedDate = `${year}/${month}/${day}`;
+        }
+        
+        setFormData({
+            ...formData,
+            [name]: formattedDate
         });
     };
 
@@ -167,7 +186,6 @@ const PdfForm = () => {
         return pdfDoc.save();
     };
 
-
     const handlePreview = async () => {
         const previewData = formData;
         const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
@@ -203,6 +221,50 @@ const PdfForm = () => {
         }
     };
 
+    // Function to render the appropriate input field based on field type
+    const renderInputField = (label, name, placeholder, multiline) => {
+        // Check if this is a date field
+        const isDateField = name === "dateCompleted" || name === "workToBegin";
+        
+        if (multiline) {
+            return (
+                <textarea
+                    id={name}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder}
+                    rows="1"
+                    className="remarks-box"
+                />
+            );
+        } else if (isDateField) {
+            return (
+                <input
+                    type="date"
+                    id={name}
+                    name={name}
+                    onChange={handleDateChange}
+                    className="date-picker"
+                />
+            );
+        } else {
+            return (
+                <input
+                    type="text"
+                    id={name}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder}
+                    className="input-field"
+                />
+            );
+        }
+    };
+
     return (
         <div className="container">
             <div className="title-section">
@@ -212,32 +274,28 @@ const PdfForm = () => {
 
             {!isPreview ? (
                 <form className="form">
-                    {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678"}, { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" }, { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St" }, { label: "Date Completed", name: "dateCompleted", placeholder: "EG: yyyy/mm/dd"}, { label: "Utilities Located", name: "utilities" , placeholder: "EG: Telecomms and Gas"}, { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon"}, { label: "Contact Name", name: "contactName", placeholder: "EG: Ozzy Osbourne" }, { label: "Contact Phone", name: "contactPhone", placeholder: "EG: 123-456-7890"}, { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com"}, { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey"}, { label: "Locate Log / Remarks", name: "locateLog", placeholder: "Drag to resize ↘️", multiline: true }, { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" }, { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am"}, { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm"}, { label: "Ontario One Call #", name: "ontarioOneCall"}, { label: "Work To Begin Date", name: "workToBegin" }, { label: "Safe Work Permit #", name: "safeWorkPermit" }, { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2"}].map(({ label, name, placeholder, multiline }) => (
+                    {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678"}, 
+                      { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" }, 
+                      { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St, Toronto ON" }, 
+                      { label: "Date Completed", name: "dateCompleted", placeholder: "Select date" }, 
+                      { label: "Utilities Located", name: "utilities" , placeholder: "EG: Hydro, Gas, Telecomms"}, 
+                      { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon"}, 
+                      { label: "Contact Name", name: "contactName", placeholder: "EG: Ozzy Osbourne" }, 
+                      { label: "Contact Phone", name: "contactPhone", placeholder: "EG: 123-456-7890"}, 
+                      { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com"}, 
+                      { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey"}, 
+                      { label: "Locate Log / Remarks", name: "locateLog", placeholder: "Drag to resize ↘️", multiline: true }, 
+                      { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" }, 
+                      { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am"}, 
+                      { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm"}, 
+                      { label: "Ontario One Call #", name: "ontarioOneCall"}, 
+                      { label: "Work To Begin Date", name: "workToBegin", placeholder: "Select date" }, 
+                      { label: "Safe Work Permit #", name: "safeWorkPermit" }, 
+                      { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2"}
+                    ].map(({ label, name, placeholder, multiline }) => (
                         <div key={name} className="form-group">
                             <label htmlFor={name}>{label}</label>
-                            {multiline ? (
-                                <textarea
-                                    id={name}
-                                    name={name}
-                                    value={formData[name]}
-                                    onChange={handleChange}
-                                    onKeyDown={handleKeyDown}
-                                    placeholder={placeholder}
-                                    rows="1"
-                                    className="remarks-box"
-                                />
-                            ) : (
-                                <input
-                                    type="text"
-                                    id={name}
-                                    name={name}
-                                    value={formData[name]}
-                                    onChange={handleChange}
-                                    onKeyDown={handleKeyDown}
-                                    placeholder={placeholder}
-                                    className="input-field"
-                                />
-                            )}
+                            {renderInputField(label, name, placeholder, multiline)}
                         </div>
                     ))}
                     <button type="button" className="preview-button" onClick={handlePreview}>Preview</button>
@@ -247,11 +305,11 @@ const PdfForm = () => {
                     <div className="preview-header">
                         <h2>Preview: {pdfNames[currentPreviewIndex]}</h2>
                         <div className="download-instruction">
-                            Customize and download your PDF with changes here ⬇️
+                           Customize and download your PDF with changes here ⬇️
                         </div>
                     </div>
                     {previewPdf && (
-                        <embed src={previewPdf} width="600" height="800" type="application/pdf" />
+                        <embed src={previewPdf} width="700" height="900" type="application/pdf" />
                     )}
                     <div className="navigation-buttons">
                         <button type="button" className="prev-button" onClick={handlePrevPdf} disabled={currentPreviewIndex === 0}>Previous</button>
@@ -270,7 +328,7 @@ const PdfForm = () => {
 
             <footer className="footer">
                 <p className="footer-title">
-                    This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved.
+                    This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.
                 </p>
             </footer>
         </div>

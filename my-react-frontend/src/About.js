@@ -15,12 +15,12 @@ const About = () => {
         This tool was developed to simplify and speed up the process of generating PDF forms for the Locate Technicians at Utility Marx. No more manually filling out repetitive forms, this app does it for you!
       </p>
       <p>
-        <strong>How It Works:</strong> Simply fill in the required fields, and the app will generate the filled PDFs ready to download. <strong>If you miss a field or need to change something, don't worry!</strong> The PDFs are fully editable, so you can tweak any info later if needed.
+        <strong>How It Works:</strong> Simply fill in the required fields, and the app will generate the filled PDFs ready to download. <strong>If you miss a field or need to change something, don't worry!</strong> The PDFs are fully editable, so you can tweak any info if needed.
       </p>
       <p>
-        Certain fields like the <strong>One Call Number</strong>, <strong>Work to Begin Date</strong> and <strong>Safe Work Permit #</strong> are completely optional, as they may not apply to every situation. You can also leave the <strong>PG Number</strong> blank for easy adjustment after completing the locate.
+        Certain fields like the <strong>One Call Number</strong>, <strong>Work to Begin Date</strong> and <strong>Safe Work Permit #</strong> are completely optional, as they may not apply to every situation. You can also leave the <strong>PG Number</strong> blank for easy adjustment after the locate.
       </p>
-      <p>
+      <p className="keyfeatures">
         <strong>📝 Key Features:</strong>
       </p>
       <ul>
@@ -39,7 +39,7 @@ const About = () => {
         {/* Footer */}
         <footer className="footer">
           <p className="footer-title">
-            This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved
+            This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.
           </p>
         </footer>
       </div>

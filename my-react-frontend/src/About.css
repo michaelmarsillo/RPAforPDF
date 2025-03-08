@@ -104,14 +104,26 @@ strong {
     white-space: nowrap;
     justify-content: center;
     color: #999;
+    margin-bottom: 12px;
 
 }
 
 .editannouncment {
-    margin-bottom: 8px;
+    margin-top: 8px;
+    margin-bottom: 7px;
     font-size: 14px;
     display: inline-block;
     white-space: nowrap;
     justify-content: center;
     color: #999;
 }
+
+.feature-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .keyfeatures {
+    margin-bottom: 3px;
+  }
