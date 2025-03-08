@@ -415,5 +415,8 @@ textarea::placeholder {
     font-size: 13px; /* Adjust the size as needed */
 }
 
+::-webkit-resizer {
+    box-shadow: 0px 0px rgb(202, 30, 30);
 
+  }
 
