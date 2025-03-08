@@ -32,6 +32,8 @@ my-react-frontend/
 │   ├── PdfForm.js        # PDF form component
 |   ├── PdfForm.css       # Styling for form 
 │   ├── index.js          # React entry point
+│   ├── about.js          # about page functionality
+│   ├── about.css         # about page styling
 │   ├── styles/           # CSS files for styling
 │── package.json          # Dependencies & scripts
 │── README.md             # Project documentation
@@ -53,7 +55,7 @@ my-react-frontend/
 ## 📌 Usage Guide
 
 1. Fill in the form fields.
-2. Click **Generate PDFs** to download the completed documents.
+2. Click **Preview** to make any changes before downloading.
 
 ---
 
