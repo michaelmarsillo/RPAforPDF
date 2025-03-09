@@ -450,5 +450,167 @@ input[type="date"].input-field {
     align-items: center;
 }
 
+/* Theme Variables */
+:root {
+    /* Light Theme Colors */
+    --light-bg: #ebe4e4;
+    --light-form-bg: #f8f5f5;
+    --light-text: #333333;
+    --light-input-bg: #e9e9e9;
+    --light-input-border: #f5c2c2;
+    --light-accent: #ff4d4d;
+    --light-header-bg: #ecb7b7;
+    --light-button-hover: #e63946;
+}
+
+/* Dark theme is the default in your app */
+body {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode overrides */
+body.light-mode {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+/* Form container in light mode */
+.light-mode form {
+    background-color: var(--light-form-bg);
+    color: var(--light-text);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header in light mode */
+.light-mode .header {
+    background-color: var(--light-header-bg);
+    color: var(--light-accent);
+}
+
+.light-mode .title, 
+.light-mode .subtitle, 
+.light-mode .header a {
+    color: var(--light-accent);
+}
+
+/* Inputs in light mode */
+.light-mode input[type="text"],
+.light-mode input[type="date"],
+.light-mode textarea {
+    background-color: var(--light-input-bg);
+    border-color: var(--light-input-border);
+    color: var(--light-text);
+}
+
+.light-mode input[type="text"]:focus,
+.light-mode input[type="date"]:focus,
+.light-mode textarea:focus {
+    border-color: var(--light-accent);
+}
+
+/* Buttons styling remains similar but with adjusted colors */
+.light-mode button:hover {
+    background-color: var(--light-button-hover);
+}
+
+/* Preview section in light mode */
+.light-mode .preview-section {
+    background-color: var(--light-form-bg);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .preview-section h2 {
+    color: var(--light-accent);
+}
+
+.light-mode .message {
+    color: var(--light-accent);
+}
+
+.light-mode .footer-title {
+    color: #666;
+}
+
+/* About page specific styling for light mode */
+.light-mode .about-container {
+    background: var(--light-form-bg);
+    color: var(--light-text);
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.2);
+}
+
+.light-mode .about-container h1 {
+    color: var(--light-accent);
+}
+
+.light-mode .about-container p,
+.light-mode .about-container ul li {
+    color: var(--light-text);
+}
+
+.light-mode .about-container ul li {
+    background: rgba(240, 240, 240, 0.9);
+    box-shadow: 0 4px 10px rgba(200, 200, 200, 0.4);
+}
+
+.light-mode .about-container ul li:hover {
+    background: rgba(255, 77, 77, 0.2);
+}
+
+/* Theme toggle button styling */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(45deg, #FF0000, #A00000);
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+.theme-toggle-btn:hover {
+    background: linear-gradient(45deg, #A00000, #FF0000);
+    transform: scale(1.05);
+}
+
+.toggle-icon {
+    margin-right: 5px;
+}
+
+/* Ensure the theme toggle is positioned correctly */
+.theme-toggle {
+    margin-left: 15px;
+}
+
+/* Adjust the header to accommodate the theme toggle */
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 15px;
+}
+
+/* On smaller screens, adjust the layout */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .title, .subtitle, .buttons-container, .theme-toggle {
+        margin: 5px 0;
+    }
+}
+
 
 
