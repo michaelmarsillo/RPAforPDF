@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import './PdfForm.css';
 
+/* Field Names */
 const PdfForm = () => {
     const [formData, setFormData] = useState({
         ticketNumber: '',
@@ -31,6 +32,8 @@ const PdfForm = () => {
     const [previewPdfs, setPreviewPdfs] = useState([]); // State to hold all generated PDFs
     const [pdfNames] = useState(['ULT.pdf', 'PG.1.pdf', 'JHA.pdf']); // Names of the PDF files
 
+
+    /* Mapping */
     const fieldNameMapping = {
         ticketNumber: {
             'ULT.pdf': 'UM Ticket No',
@@ -265,6 +268,7 @@ const PdfForm = () => {
         }
     };
 
+    /* All the form fields*/
     return (
         <div className="container">
             <div className="title-section">
@@ -319,6 +323,7 @@ const PdfForm = () => {
                 </div>
             )}
 
+            {/*When you press preview*/}
             {showMessage && (
                 <div className="message show">
                     <h2>Happy Locating!</h2>
@@ -326,6 +331,7 @@ const PdfForm = () => {
                 </div>
             )}
 
+            {/*Footer*/}
             <footer className="footer">
                 <p className="footer-title">
                     This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.

@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
       <div>
-        {/* Header with navigation links */}
         <NavBar/>
 
         {/* Routes */}
