@@ -113,17 +113,25 @@ const PdfForm = () => {
     // Handle date field changes specifically
     const handleDateChange = (e) => {
         const { name, value } = e.target;
-        
-        // Format date from yyyy-mm-dd to yyyy/mm/dd for consistency
+
+        // Format date from yyyy-mm-dd to "Month Day, Year" format
         let formattedDate = '';
         if (value) {
-            const date = new Date(value);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            formattedDate = `${year}/${month}/${day}`;
+            // Split the date string and create a new Date object with explicit year, month, day
+            const [year, month, day] = value.split('-').map(Number);
+            // Note: month is 0-indexed in JavaScript Date (0 = January)
+            const date = new Date(year, month - 1, day);
+
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            const monthName = monthNames[date.getMonth()];
+            const dayOfMonth = date.getDate();
+            const fullYear = date.getFullYear();
+            formattedDate = `${monthName} ${dayOfMonth}, ${fullYear}`;
         }
-        
+
         setFormData({
             ...formData,
             [name]: formattedDate
@@ -192,13 +200,13 @@ const PdfForm = () => {
     const handlePreview = async () => {
         const previewData = formData;
         const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
-        
+
         // Generate preview PDFs for each template
         const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
-        
+
         // Store the preview PDFs (for navigation purposes)
         setPreviewPdfs(previewPdfs);
-        
+
         setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' })));
         setIsPreview(true);  // Toggle to preview mode
         setShowMessage(true);
@@ -224,49 +232,49 @@ const PdfForm = () => {
         }
     };
 
-    // Function to render the appropriate input field based on field type
-    const renderInputField = (label, name, placeholder, multiline) => {
-        // Check if this is a date field
-        const isDateField = name === "dateCompleted" || name === "workToBegin";
-        
-        if (multiline) {
-            return (
-                <textarea
-                    id={name}
-                    name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={placeholder}
-                    rows="1"
-                    className="remarks-box"
-                />
-            );
-        } else if (isDateField) {
-            return (
-                <input
-                    type="date"
-                    id={name}
-                    name={name}
-                    onChange={handleDateChange}
-                    className="date-picker"
-                />
-            );
-        } else {
-            return (
-                <input
-                    type="text"
-                    id={name}
-                    name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={placeholder}
-                    className="input-field"
-                />
-            );
-        }
-    };
+   // Function to render the appropriate input field based on field type
+const renderInputField = (label, name, placeholder, multiline) => {
+    // Check if this is a date field
+    const isDateField = name === "dateCompleted" || name === "workToBegin";
+    
+    if (multiline) {
+        return (
+            <textarea
+                id={name}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder={placeholder}
+                rows="1"
+                className="remarks-box"
+            />
+        );
+    } else if (isDateField) {
+        return (
+            <input
+                type="date"
+                id={name}
+                name={name}
+                onChange={handleDateChange}
+                className="date-picker"
+            />
+        );
+    } else {
+        return (
+            <input
+                type="text"
+                id={name}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder={placeholder}
+                className="input-field"
+            />
+        );
+    }
+};
 
     /* All the form fields*/
     return (
@@ -278,24 +286,24 @@ const PdfForm = () => {
 
             {!isPreview ? (
                 <form className="form">
-                    {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678"}, 
-                      { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" }, 
-                      { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St, Toronto ON" }, 
-                      { label: "Date Completed", name: "dateCompleted", placeholder: "Select date" }, 
-                      { label: "Utilities Located", name: "utilities" , placeholder: "EG: Hydro, Gas, Telecomms"}, 
-                      { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon"}, 
-                      { label: "Contact Name", name: "contactName", placeholder: "EG: Ozzy Osbourne" }, 
-                      { label: "Contact Phone", name: "contactPhone", placeholder: "EG: 123-456-7890"}, 
-                      { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com"}, 
-                      { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey"}, 
-                      { label: "Locate Log / Remarks", name: "locateLog", placeholder: "Drag to resize ↘️", multiline: true }, 
-                      { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" }, 
-                      { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am"}, 
-                      { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm"}, 
-                      { label: "Ontario One Call #", name: "ontarioOneCall"}, 
-                      { label: "Work To Begin Date", name: "workToBegin", placeholder: "Select date" }, 
-                      { label: "Safe Work Permit #", name: "safeWorkPermit" }, 
-                      { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2"}
+                    {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678" },
+                    { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" },
+                    { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St, Toronto ON" },
+                    { label: "Date Completed", name: "dateCompleted", placeholder: "Select date" },
+                    { label: "Utilities Located", name: "utilities", placeholder: "EG: Hydro, Gas, Telecomms" },
+                    { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon" },
+                    { label: "Contact Name", name: "contactName", placeholder: "EG: Ozzy Osbourne" },
+                    { label: "Contact Phone", name: "contactPhone", placeholder: "EG: 123-456-7890" },
+                    { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com" },
+                    { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey" },
+                    { label: "Locate Log / Remarks", name: "locateLog", placeholder: "Drag to resize ↘️", multiline: true },
+                    { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" },
+                    { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am" },
+                    { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm" },
+                    { label: "Ontario One Call #", name: "ontarioOneCall" },
+                    { label: "Work To Begin Date", name: "workToBegin", placeholder: "Select date" },
+                    { label: "Safe Work Permit #", name: "safeWorkPermit" },
+                    { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2" }
                     ].map(({ label, name, placeholder, multiline }) => (
                         <div key={name} className="form-group">
                             <label htmlFor={name}>{label}</label>
@@ -309,7 +317,7 @@ const PdfForm = () => {
                     <div className="preview-header">
                         <h2>Preview: {pdfNames[currentPreviewIndex]}</h2>
                         <div className="download-instruction">
-                           Customize and download your PDF with changes here ⬇️
+                            Customize and download your PDF with changes here ⬇️
                         </div>
                     </div>
                     {previewPdf && (
@@ -339,7 +347,7 @@ const PdfForm = () => {
             </footer>
         </div>
 
-        
+
     );
 };
 
