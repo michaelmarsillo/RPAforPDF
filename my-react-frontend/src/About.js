@@ -35,6 +35,14 @@ const About = () => {
         <strong>💫 JHA coverage added.</strong>
       </p>
 
+
+      <div className="videoembed">
+      <h1> Demo Video </h1>
+      <video width="640" height="360" controls>
+        <source src="/videos/marxPDF Demo.mp4" type="video/mp4"/>
+      </video>
+      </div>
+
       {/* Footer */}
       <footer className="footer">
         <li className="footer-title">
