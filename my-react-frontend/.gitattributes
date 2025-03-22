@@ -1,2 +1,0 @@
-*.mp4 filter=lfs diff=lfs merge=lfs -text
-marxPDF[[:space:]]Demo.mp4 filter=lfs diff=lfs merge=lfs -text
