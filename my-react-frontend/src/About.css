@@ -156,7 +156,7 @@
 /* Small tablets and large phones */
 @media screen and (max-width: 768px) {
     .about-container {
-        margin: 80px auto;
+        margin: 140px auto;
         padding: 25px 20px;
     }
     
@@ -172,10 +172,64 @@
 
 /* Small phones */
 @media screen and (max-width: 480px) {
+    .header {
+        padding: 0px 0px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+    }
+
+    .header .title {
+        font-size: 20px;
+        margin-right: 10px;
+        text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.6);
+        font-weight: bold;
+        font-style: italic;
+        text-align: center;
+    
+    }
+
+    button {
+        background-color: #eb3717;
+        color: white;
+        padding: 0px 0px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+    .homebutton {
+        font-size: 14px;
+        padding: 4px 8px;
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        transition: all 0.3s ease-in-out;
+    
+    }
+    .aboutbutton {
+        font-size: 14px;
+        padding: 4px 8px;
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        transition: all 0.3s ease-in-out;
+    
+    }
+
     .about-container {
-        margin: 60px auto 40px;
-        padding: 20px 15px;
-        width: 95%;
+        margin: 110px auto 40px;
+        padding: 20px 0px;
+        width: 70%;
     }
     
     .about-container h1 {
@@ -195,9 +249,12 @@
     }
     
     .privateannouncment,
-    .editannouncment,
-    .footer-title {
+    .editannouncment {
         font-size: 11px;
+    }
+
+    .footer-title{
+        font-size: 7px;
     }
 }
 
@@ -218,7 +275,7 @@
     }
 }
 
-/* Fix for unwrapped text */
+
 @media screen and (max-width: 600px) {
     .privateannouncment,
     .editannouncment {
