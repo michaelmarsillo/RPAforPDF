@@ -1,9 +1,10 @@
-import './App.css'; // Importing global styles
+import './App.css'; 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom'; // Import Link
-import PdfForm from './PdfForm.js'; // Home Page Component
-import About from './About'; // About Page Component
+import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import PdfForm from './PdfForm.js'; 
+import About from './About';
 import NavBar from './components/NavBar.jsx';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   return (
