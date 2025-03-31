@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
 import PdfForm from './PdfForm.js'; 
 import About from './About';
 import NavBar from './components/NavBar.jsx';
-import { SpeedInsights } from "@vercel/speed-insights/react"
+// eslint-disable-next-line no-unused-vars
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
   return (
