@@ -10,6 +10,16 @@ A **React-based** application designed to automate the process of filling out th
 
 ---
 
+# ⌛ Release Notes
+
+## March 31st, 2025
+- Added "Open Gmail" button to open gmail in another window for faster ticket completion
+
+## March 30th, 2025
+- Added speed insights (vercel)
+- Added google analytics
+
+
 ## 🚀 Features
 
 - 📄 **Fill out the ULT, PG.1 and JHA PDFs** automatically
