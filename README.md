@@ -12,6 +12,11 @@ A **React-based** application designed to automate the process of filling out th
 
 # ⌛ Release Notes
 
+### April 1st, 2025
+- Added more information to the about page
+- Fixed a refresh error on the about page
+- Added github link in the footer
+
 ### March 31st, 2025
 - Added "Open Gmail" button to open gmail in another window for faster ticket completion
 
