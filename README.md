@@ -19,6 +19,8 @@ A **React-based** application designed to automate the process of filling out th
 - Added speed insights (vercel)
 - Added google analytics
 
+---
+
 
 ## 🚀 Features
 
