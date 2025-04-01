@@ -350,9 +350,13 @@ const PdfForm = () => {
 
             {/*Footer*/}
             <footer className="footer">
-                <p className="footer-title">
-                    This app was created by Michael Marsillo for Utility Marx. ©️ All rights reserved 2025.
-                </p>
+                <li className="footer-title">
+                    This app was created by{" "}
+                    <a href="https://github.com/michaelmarsillo" target="_blank" rel="noopener noreferrer">
+                        Michael Marsillo
+                    </a>{" "}
+                    for Utility Marx. ©️ All rights reserved 2025.
+                </li>
             </footer>
         </div>
 

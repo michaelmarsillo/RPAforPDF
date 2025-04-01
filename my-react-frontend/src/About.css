@@ -34,7 +34,7 @@
 
 /* Footer */
 .footer-title {
-    font-size: 12px;
+    font-size: 12.5px;
     display: inline-block;
     white-space: nowrap;
     justify-content: center;
@@ -80,12 +80,10 @@
 
 /* Link Styles */
 .about-container a {
-    color: #ff4d4d;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
+    color: #999;
+    text-decoration: underline;
     margin-top: 20px;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.4s ease-in-out;
 }
 
 .about-container a:hover {
@@ -103,7 +101,25 @@
     color: #ff4d4d;
 }
 
+.editannouncment {
+    margin-top: 8px;
+    font-size: 14px;
+    display: inline-block;
+    white-space: nowrap;
+    justify-content: center;
+    color: #999;
+}
+
+.individualannouncement {
+    margin-top: 3px;
+    font-size: 14px;
+    display: inline-block;
+    justify-content: center;
+    color: #999;
+}
+
 .privateannouncment {
+    margin-top: 3px;
     font-size: 14px;
     display: inline-block;
     white-space: nowrap;
@@ -112,15 +128,6 @@
     margin-bottom: 12px;
 }
 
-.editannouncment {
-    margin-top: 8px;
-    margin-bottom: 7px;
-    font-size: 14px;
-    display: inline-block;
-    white-space: nowrap;
-    justify-content: center;
-    color: #999;
-}
 
 .feature-icon {
     font-size: 1.5rem;
@@ -128,20 +135,20 @@
     flex-shrink: 0;
 }
 
-.keyfeatures {
-    margin-bottom: 3px;
+.about-container .keyfeatures {
+    font-size: 22px;
+    margin-bottom: 5px;
 }
 
-/* Responsive design attempt*/ 
 
-/* Large screens */
+/* large screens */
 @media screen and (min-width: 1200px) {
     .about-container {
         padding: 40px 50px;
     }
 }
 
-/* Medium screens */
+/* medium screens */
 @media screen and (max-width: 992px) {
     .about-container {
         margin: 100px auto;
@@ -153,7 +160,7 @@
     }
 }
 
-/* Small tablets and large phones */
+/* small tablets and large phones */
 @media screen and (max-width: 768px) {
     .about-container {
         margin: 140px auto;
@@ -170,7 +177,7 @@
     }
 }
 
-/* Small phones */
+/* small phones */
 @media screen and (max-width: 480px) {
     .header {
         padding: 0px 0px;
@@ -249,16 +256,17 @@
     }
     
     .privateannouncment,
-    .editannouncment {
+    .editannouncment,
+    .individualannouncement {
         font-size: 11px;
     }
 
     .footer-title{
-        font-size: 7px;
+        font-size: 8px;
     }
 }
 
-/* Extra small phones */
+/* extra small phones */
 @media screen and (max-width: 320px) {
     .about-container {
         margin: 50px auto 30px;
@@ -283,7 +291,7 @@
     }
 }
 
-/* Handle very small height screens */
+/* handle very small height screens */
 @media screen and (max-height: 600px) {
     .about-container {
         margin: 40px auto;
