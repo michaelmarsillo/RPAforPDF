@@ -737,3 +737,19 @@ body.light-mode {
         margin: 0px 0;
     }
 }
+
+.open-gmail {
+    display: block;
+    margin-left: 302px;
+    margin-top: 10px; 
+    font-size: 14px;
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 13px 25px;
+    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
+    width: fit-content;
+
+}

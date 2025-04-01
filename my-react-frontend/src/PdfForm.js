@@ -232,49 +232,49 @@ const PdfForm = () => {
         }
     };
 
-   // Function to render the appropriate input field based on field type
-const renderInputField = (label, name, placeholder, multiline) => {
-    // Check if this is a date field
-    const isDateField = name === "dateCompleted" || name === "workToBegin";
-    
-    if (multiline) {
-        return (
-            <textarea
-                id={name}
-                name={name}
-                value={formData[name]}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                placeholder={placeholder}
-                rows="1"
-                className="remarks-box"
-            />
-        );
-    } else if (isDateField) {
-        return (
-            <input
-                type="date"
-                id={name}
-                name={name}
-                onChange={handleDateChange}
-                className="date-picker"
-            />
-        );
-    } else {
-        return (
-            <input
-                type="text"
-                id={name}
-                name={name}
-                value={formData[name]}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                placeholder={placeholder}
-                className="input-field"
-            />
-        );
-    }
-};
+    // Function to render the appropriate input field based on field type
+    const renderInputField = (label, name, placeholder, multiline) => {
+        // Check if this is a date field
+        const isDateField = name === "dateCompleted" || name === "workToBegin";
+
+        if (multiline) {
+            return (
+                <textarea
+                    id={name}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder}
+                    rows="1"
+                    className="remarks-box"
+                />
+            );
+        } else if (isDateField) {
+            return (
+                <input
+                    type="date"
+                    id={name}
+                    name={name}
+                    onChange={handleDateChange}
+                    className="date-picker"
+                />
+            );
+        } else {
+            return (
+                <input
+                    type="text"
+                    id={name}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder}
+                    className="input-field"
+                />
+            );
+        }
+    };
 
     /* All the form fields*/
     return (
@@ -327,6 +327,15 @@ const renderInputField = (label, name, placeholder, multiline) => {
                         <button type="button" className="prev-button" onClick={handlePrevPdf} disabled={currentPreviewIndex === 0}>Previous</button>
                         <button type="button" className="go-back-button" onClick={handleGoBack}>Back to Edit</button>
                         <button type="button" className="next-button" onClick={handleNextPdf} disabled={currentPreviewIndex === previewPdfs.length - 1}>Next</button>
+                    </div>
+                    <div>
+                        <button
+                            type="button"
+                            className="open-gmail"
+                            onClick={() => window.open("https://mail.google.com/mail/u/0/#inbox", "_blank", "noopener,noreferrer")}
+                        >
+                            Open Gmail
+                        </button>
                     </div>
                 </div>
             )}
