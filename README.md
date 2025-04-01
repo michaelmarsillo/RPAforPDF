@@ -26,7 +26,6 @@ A **React-based** application designed to automate the process of filling out th
 
 ---
 
-
 ## 🚀 Features
 
 - 📄 **Fill out the ULT, PG.1 and JHA PDFs** automatically
