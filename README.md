@@ -8,7 +8,7 @@
 
 A **React-based** application designed to automate the process of filling out the ULT, PG.1 and JHA PDF forms for the utility locating company I previously worked at.
 
----
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 # ⌛ Release Notes
 
