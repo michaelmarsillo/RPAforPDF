@@ -180,6 +180,23 @@ const PdfForm = () => {
                     fieldValue = cityValue ? `${value}, ${cityValue}` : value;
                 }
                 
+                // Special handling for JHA Contractor Contact - prioritize email, fallback to phone
+                if (field === 'contactEmail' && pdfName === 'JHA.pdf') {
+                    const emailValue = data.contactEmail || '';
+                    const phoneValue = data.contactPhone || '';
+                    
+                    if (emailValue && phoneValue) {
+                        // Both filled - use email
+                        fieldValue = emailValue;
+                    } else if (phoneValue && !emailValue) {
+                        // Only phone filled - use phone
+                        fieldValue = phoneValue;
+                    } else {
+                        // Use email if available, empty if neither
+                        fieldValue = emailValue;
+                    }
+                }
+                
                 if (Array.isArray(fieldInPdf)) {
                     fieldInPdf.forEach(fieldName => {
                         const formField = form.getTextField(fieldName);
