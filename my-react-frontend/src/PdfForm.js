@@ -38,17 +38,20 @@ const PdfForm = () => {
         ticketNumber: {
             'ULT.pdf': 'UM Ticket No',
             'PG.1.pdf': 'Text1',
-            'JHA.pdf': 'Utility Marx Ticket',
+            'JHA.pdf': 'Utility Marx Ticket Number',
         },
         locatorName: {
             'ULT.pdf': ['ULT Name', 'ULT Signature'],
             'PG.1.pdf': 'locator1',
-            'JHA.pdf': ["Locator's Name", "Locator's Name 2"],
+            'JHA.pdf': ["UM Employee Onsite 1", "Start Name", "End Name"],
         },
         address: {
             'ULT.pdf': 'Locate Address',
             'PG.1.pdf': 'Text7',
             'JHA.pdf': 'Address',
+        },
+        city: {
+            'JHA.pdf': 'City',
         },
         dateCompleted: {
             'ULT.pdf': 'Date',
@@ -60,27 +63,28 @@ const PdfForm = () => {
         },
         companyName: {
             'PG.1.pdf': 'Text3',
-            'JHA.pdf': "Contractor's Name",
+            'JHA.pdf': "Contractor",
         },
         contactName: {
             'PG.1.pdf': 'Text4',
-            'JHA.pdf': 'Contact Person',
         },
         contactPhone: {
             'PG.1.pdf': 'Text5',
         },
         contactEmail: {
             'PG.1.pdf': 'Text6',
+            'JHA.pdf': 'Contractor Contact',
         },
         natureOfWork: {
             'PG.1.pdf': 'Text8',
         },
         timeIn: {
             'PG.1.pdf': 'timein1',
-            'JHA.pdf': 'Time',
+            'JHA.pdf': 'Start Time',
         },
         timeOut: {
             'PG.1.pdf': 'timeout1',
+            'JHA.pdf': 'End Time',
         },
         ontarioOneCall: {
             'PG.1.pdf': 'Text9',
@@ -95,11 +99,9 @@ const PdfForm = () => {
             'PG.1.pdf': 'pg',
         },
         workerName1: {
-            'JHA.pdf': 'Worker Name 1',
+            'JHA.pdf': 'UM Employee Onsite 2',
         },
-        safeWorkPermit: {
-            'JHA.pdf': 'Safe Work Permit #',
-        },
+       
     };
 
     const handleChange = (e) => {
@@ -170,11 +172,19 @@ const PdfForm = () => {
             const fieldMapping = fieldNameMapping[field];
             if (fieldMapping && fieldMapping[pdfName]) {
                 const fieldInPdf = fieldMapping[pdfName];
+                
+                // Special handling for address field - combine with city for ULT and PG.1 PDFs
+                let fieldValue = value;
+                if (field === 'address' && (pdfName === 'ULT.pdf' || pdfName === 'PG.1.pdf')) {
+                    const cityValue = data.city || '';
+                    fieldValue = cityValue ? `${value}, ${cityValue}` : value;
+                }
+                
                 if (Array.isArray(fieldInPdf)) {
                     fieldInPdf.forEach(fieldName => {
                         const formField = form.getTextField(fieldName);
                         if (formField) {
-                            formField.setText(value);
+                            formField.setText(fieldValue);
                             formField.updateAppearances(helveticaFont);
                             if (field === "locateLog") {
                                 formField.setFontSize(12);
@@ -184,7 +194,7 @@ const PdfForm = () => {
                 } else {
                     const formField = form.getTextField(fieldInPdf);
                     if (formField) {
-                        formField.setText(value);
+                        formField.setText(fieldValue);
                         formField.updateAppearances(helveticaFont);
                         if (field === "locateLog") {
                             formField.setFontSize(12);
@@ -288,7 +298,8 @@ const PdfForm = () => {
                 <form className="form">
                     {[{ label: "Ticket Number", name: "ticketNumber", placeholder: "EG: 12345678" },
                     { label: "Locator Name", name: "locatorName", placeholder: "EG: John Pork" },
-                    { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St, Toronto ON" },
+                    { label: "Address Of Locate", name: "address", placeholder: "EG: 123 Utility St" },
+                    { label: "City", name: "city", placeholder: "EG: Toronto ON" },
                     { label: "Date Completed", name: "dateCompleted", placeholder: "Select date" },
                     { label: "Utilities Located", name: "utilities", placeholder: "EG: Hydro, Gas, Telecomms" },
                     { label: "Company Name", name: "companyName", placeholder: "EG: EllisDon" },
@@ -302,7 +313,6 @@ const PdfForm = () => {
                     { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm" },
                     { label: "Ontario One Call #", name: "ontarioOneCall" },
                     { label: "Work To Begin Date", name: "workToBegin", placeholder: "Select date" },
-                    { label: "Safe Work Permit #", name: "safeWorkPermit" },
                     { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2" }
                     ].map(({ label, name, placeholder, multiline }) => (
                         <div key={name} className="form-group">
