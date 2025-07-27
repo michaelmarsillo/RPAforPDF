@@ -14,6 +14,8 @@ A **React-based** application designed to automate the process of filling out th
 
 ### July 26th, 2025
 - Added new JHA functionality and automation
+- Revamped User Interface so that its way cleaner
+- Added better mobile functionality
 
 ### April 1st, 2025
 - Added more information to the about page
