@@ -31,6 +31,7 @@ const PdfForm = () => {
     const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0); // State to track the current preview index
     const [previewPdfs, setPreviewPdfs] = useState([]); // State to hold all generated PDFs
     const [pdfNames] = useState(['ULT.pdf', 'PG.1.pdf', 'JHA.pdf']); // Names of the PDF files
+    const [isLoading, setIsLoading] = useState(false); // State for loading animation
 
 
     /* Mapping */
@@ -225,22 +226,31 @@ const PdfForm = () => {
     };
 
     const handlePreview = async () => {
-        const previewData = formData;
-        const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
+        setIsLoading(true);
+        
+        try {
+            const previewData = formData;
+            const pdfTemplates = ['/pdfs/ULT.pdf', '/pdfs/PG.1.pdf', '/pdfs/JHA.pdf'];
 
-        // Generate preview PDFs for each template
-        const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
+            // Generate preview PDFs for each template
+            const previewPdfs = await Promise.all(pdfTemplates.map(template => fillPdf(template, previewData)));
 
-        // Store the preview PDFs (for navigation purposes)
-        setPreviewPdfs(previewPdfs);
+            // Store the preview PDFs (for navigation purposes)
+            setPreviewPdfs(previewPdfs);
 
-        setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' })));
-        setIsPreview(true);  // Toggle to preview mode
-        setShowMessage(true);
+            setPreviewPdf(URL.createObjectURL(new Blob([previewPdfs[0]], { type: 'application/pdf' })));
+            setIsPreview(true);  // Toggle to preview mode
+            setShowMessage(true);
+        } catch (error) {
+            console.error('Error generating preview:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleGoBack = () => {
         setIsPreview(false);  // Go back to form
+        setShowMessage(false); // Hide message when going back
     };
 
     const handleNextPdf = () => {
@@ -305,11 +315,11 @@ const PdfForm = () => {
 
     /* All the form fields*/
     return (
-        <div className="container">
-            <div className="title-section">
-                <h1>Utility Marx PDF Filler</h1>
-                <h3 className="subtext">For ULT, PG.1 and JHA</h3>
-            </div>
+        <div className={`container ${isPreview ? 'preview-mode' : 'form-mode'}`}>
+                <div className="title-section">
+                    <h1>Utility Marx PDF Filler</h1>
+                    <h3 className="subtext">For ULT, PG.1 and JHA</h3>
+                </div>
 
             {!isPreview ? (
                 <form className="form">
@@ -325,19 +335,28 @@ const PdfForm = () => {
                     { label: "Contact Email", name: "contactEmail", placeholder: "EG: cutyourlawn@gmail.com" },
                     { label: "Nature Of Work", name: "natureOfWork", placeholder: "EG: Boreholes for survey" },
                     { label: "Locate Log / Remarks", name: "locateLog", placeholder: "Drag to resize ↘️", multiline: true },
-                    { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" },
                     { label: "Time In", name: "timeIn", placeholder: "EG: 8:00am" },
                     { label: "Time Out", name: "timeOut", placeholder: "EG: 4:00pm" },
-                    { label: "Ontario One Call #", name: "ontarioOneCall" },
+                    { label: "Ontario One Call #", name: "ontarioOneCall", placeholder: "EG: 1234567890" },
                     { label: "Work To Begin Date", name: "workToBegin", placeholder: "Select date" },
+                    { label: "Assistant Workers Name", name: "workerName1", placeholder: "EG: Mike" },
                     { label: "PG 1 of _", name: "numOfPages", placeholder: "EG: 2" }
                     ].map(({ label, name, placeholder, multiline }) => (
-                        <div key={name} className="form-group">
+                        <div key={name} className={`form-group ${multiline ? 'full-width' : ''}`}>
                             <label htmlFor={name}>{label}</label>
                             {renderInputField(label, name, placeholder, multiline)}
                         </div>
                     ))}
-                    <button type="button" className="preview-button" onClick={handlePreview}>Preview</button>
+                    <button type="button" className="preview-button" onClick={handlePreview} disabled={isLoading}>
+                        {isLoading ? (
+                            <>
+                                <span className="loading"></span>
+                                <span style={{ marginLeft: '8px' }}>Generating...</span>
+                            </>
+                        ) : (
+                            'Preview'
+                        )}
+                    </button>
                 </form>
             ) : (
                 <div className="preview-section">
@@ -351,9 +370,9 @@ const PdfForm = () => {
                         <embed src={previewPdf} width="700" height="900" type="application/pdf" />
                     )}
                     <div className="navigation-buttons">
-                        <button type="button" className="prev-button" onClick={handlePrevPdf} disabled={currentPreviewIndex === 0}>Previous</button>
+                        <button type="button" className="prev-button" onClick={handlePrevPdf} disabled={currentPreviewIndex === 0}>⬅️ Previous</button>
                         <button type="button" className="go-back-button" onClick={handleGoBack}>Back to Edit</button>
-                        <button type="button" className="next-button" onClick={handleNextPdf} disabled={currentPreviewIndex === previewPdfs.length - 1}>Next</button>
+                        <button type="button" className="next-button" onClick={handleNextPdf} disabled={currentPreviewIndex === previewPdfs.length - 1}>Next ➡️</button>
                     </div>
                     <div>
                         <button
@@ -361,7 +380,7 @@ const PdfForm = () => {
                             className="open-gmail"
                             onClick={() => window.open("https://mail.google.com/mail/u/0/#inbox", "_blank", "noopener,noreferrer")}
                         >
-                            Open Gmail
+                            📫 Open Gmail
                         </button>
                     </div>
                 </div>
@@ -377,17 +396,15 @@ const PdfForm = () => {
 
             {/*Footer*/}
             <footer className="footer">
-                <li className="footer-title">
+                <p className="footer-title">
                     This app was created by{" "}
                     <a href="https://github.com/michaelmarsillo" target="_blank" rel="noopener noreferrer">
                         Michael Marsillo
                     </a>{" "}
-                    for Utility Marx. ©️ All rights reserved 2025.
-                </li>
+                    for Utility Marx. ©️ All rights reserved {new Date().getFullYear()}.
+                </p>
             </footer>
         </div>
-
-
     );
 };
 
